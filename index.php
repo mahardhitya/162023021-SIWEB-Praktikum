@@ -1,17 +1,19 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="id">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeatStage | Manajemen Konser</title>
+    <title>Majo Stage | Manajemen Konser</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
@@ -23,19 +25,34 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="#dashboard">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="#tambah-event">Kelola Event</a></li>
+                    <li class="nav-item d-flex align-items-center">
+                        <button id="themeToggle" class="btn btn-outline-light btn-sm me-2">Light Mode</button>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <button id="cartBtn" class="btn btn-outline-light position-relative btn-sm">
+                            <i class="bi bi-heart"></i>
+                            <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                        </button>
+                    </li>
+<?php if (isset($_SESSION['username'])): ?>
+                    <li class="nav-item d-flex align-items-center ms-3">
+                        <span class="navbar-text text-white me-2">Hi, <?= htmlspecialchars($_SESSION['username']) ?></span>
+                        <a href="controller/logout.php" class="btn btn-outline-light btn-sm">Logout</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item d-flex align-items-center ms-3">
+                        <a href="login.php" class="btn btn-warning btn-sm">Login</a>
+                    </li>
+                <?php endif; ?>
                 </ul>
             </div>
         </div>
     </nav>
 
-      
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    </nav>
-
   <header class="hero-section d-flex align-items-center">
     <div class="container text-center text-white">
         <h1 class="display-3 fw-bold shadow-text">Atur Panggung Anda</h1>
-        <p class="lead shadow-text">Sistem manajemen terpadu untuk pengelolaan event konser, penjualan tiket, dan penjadwalan artis.</p>
+        <p class="lead shadow-text">Sistem manajemen terpadu untuk pengelolaan event konser dan penjualan tiket</p>
         <a href="#tambah-event" class="btn btn-primary btn-lg mt-3 shadow-sm">Mulai Kelola</a>
     </div>
 </header>
@@ -77,7 +94,7 @@
     <h2 class="text-center mb-5 fw-bold">Jadwal Konser Mendatang</h2>
     <div class="row g-4">
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 concert-item">
+            <div class="card h-100 shadow-sm border-0 concert-item" data-name="Rock Legend Tour" data-stock="20">
                 <img src="assets/rock.png" class="card-img-top" alt="Konser Rock">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -87,16 +104,21 @@
                     <h5 class="card-title fw-bold">Rock Legend Tour</h5>
                     <p class="card-text text-secondary">Stadion Gelora Bung Karno, Jakarta</p>
                     <hr>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="fw-bold text-dark">Rp 750.000</span>
                         <button class="btn btn-outline-dark btn-sm">Detail</button>
+                    </div>
+                    <p>Stok: <span class="stock-count">20</span></p>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-success btn-sm buy-btn">Beli</button>
+                        <button class="btn btn-outline-primary btn-sm wishlist-btn">Tambah ke Wishlist</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 concert-item">
+            <div class="card h-100 shadow-sm border-0 concert-item" data-name="IVE Fest" data-stock="15">
                 <img src="assets/ive.jpg" class="card-img-top" alt="Konser Pop">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -106,16 +128,21 @@
                     <h5 class="card-title fw-bold">IVE Fest</h5>
                     <p class="card-text text-secondary">ICE BSD, Tangerang</p>
                     <hr>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="fw-bold text-dark">Rp 1.450.000</span>
                         <button class="btn btn-outline-dark btn-sm">Detail</button>
+                    </div>
+                    <p>Stok: <span class="stock-count">15</span></p>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-success btn-sm buy-btn">Beli</button>
+                        <button class="btn btn-outline-primary btn-sm wishlist-btn">Tambah ke Wishlist</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 concert-item">
+            <div class="card h-100 shadow-sm border-0 concert-item" data-name="Midnight Jazz Session" data-stock="10">
                 <img src="assets/jazz.png" class="card-img-top" alt="Konser Jazz">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -125,9 +152,14 @@
                     <h5 class="card-title fw-bold">Midnight Jazz Session</h5>
                     <p class="card-text text-secondary">Motion Blue, Jakarta</p>
                     <hr>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="fw-bold text-dark">Rp 1.200.000</span>
                         <button class="btn btn-outline-dark btn-sm">Detail</button>
+                    </div>
+                    <p>Stok: <span class="stock-count">10</span></p>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-success btn-sm buy-btn">Beli</button>
+                        <button class="btn btn-outline-primary btn-sm wishlist-btn">Tambah ke Wishlist</button>
                     </div>
                 </div>
             </div>
@@ -182,9 +214,26 @@
 
     <footer class="bg-dark text-white py-4 mt-5">
         <div class="container text-center">
-            <p class="mb-0">&copy; 2026 BeatStage Management System. Proyek Mandiri Praktikum Web.</p>
+            <p class="mb-0">&copy; 2026 Manajemen Event Konser</p>
         </div>
     </footer>
+
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Daftar Wishlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="cartModalBody">
+                    <p class="mb-0">Tidak ada item.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>

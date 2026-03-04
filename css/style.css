@@ -104,3 +104,20 @@ body {
 .sticky-top {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+
+/* Dark mode overrides */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+body.dark-mode .navbar {
+    background-color: #212121 !important;
+}
+body.dark-mode .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
