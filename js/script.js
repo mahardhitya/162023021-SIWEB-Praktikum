@@ -35,7 +35,6 @@ const setTheme = (mode) => {
     localStorage.setItem('theme', mode);
 };
 
-// initialize theme on load
 const savedTheme = localStorage.getItem('theme') || 'light';
 setTheme(savedTheme);
 
@@ -75,7 +74,7 @@ function populateModal() {
         const btn = document.createElement('button');
         btn.className = 'btn btn-sm btn-danger remove-btn';
         btn.textContent = 'Hapus';
-        btn.dataset.index = index; // record position
+        btn.dataset.index = index; 
 
         // removal handler
         btn.addEventListener('click', (e) => {
