@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['username'])) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -14,7 +14,7 @@ if (isset($_SESSION['username'])) {
     <title>Login | BeatStage Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/login-style.css">
+    <link rel="stylesheet" href="../css/login-style.css">
 </head>
 <body>
 
@@ -25,13 +25,19 @@ if (isset($_SESSION['username'])) {
                 <p class="text-light-50">Silakan login untuk mengelola event</p>
             </div>
 
-            <form method="POST" action="controller/proses.login.php" class="needs-validation" novalidate>
+            <?php if (isset($_GET['error'])): ?>
+                <div class="alert alert-danger mx-3" role="alert">
+                    Username atau password salah. Silakan coba lagi.
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" action="../controller/proses.login.php" class="needs-validation" novalidate>
                 <div class="mb-4">
                     <label class="form-label text-white">Username</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent border-end-0 text-white"><i class="bi bi-person"></i></span>
                         <input type="text" name="username" class="form-control bg-transparent text-white border-start-0" 
-                        value="<?php echo $_COOKIE['username'] ?? ''; ?>" placeholder="Masukkan username" required>
+                        value="<?php echo htmlspecialchars($_COOKIE['username'] ?? ''); ?>" placeholder="Masukkan username" required>
                     </div>
                 </div>
 
@@ -46,7 +52,7 @@ if (isset($_SESSION['username'])) {
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div class="form-check">
-                        <input type="checkbox" name="remember" class="form-check-input" id="rememberMe">
+                        <input type="checkbox" name="remember" class="form-check-input" id="rememberMe" <?php echo isset($_COOKIE['username']) ? 'checked' : ''; ?>>
                         <label class="form-check-label text-white-50" for="rememberMe">Remember Me</label>
                     </div>
                     <a href="#" class="text-info text-decoration-none small">Lupa Password?</a>
@@ -55,7 +61,7 @@ if (isset($_SESSION['username'])) {
                 <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow">LOGIN</button>
 
                 <div class="text-center mt-4">
-                    <a href="index.php" class="text-white-50 text-decoration-none small">
+                    <a href="../index.php" class="text-white-50 text-decoration-none small">
                         <i class="bi bi-arrow-left me-1"></i> Kembali ke Beranda
                     </a>
                 </div>
