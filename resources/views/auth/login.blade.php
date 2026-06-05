@@ -16,7 +16,15 @@
                 <p class="text-light-50">Silakan login untuk mengelola event</p>
             </div>
 
-            @if ($error)
+            @if ($errors->any())
+                <div class="alert alert-danger mx-3" role="alert">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @elseif ($error)
                 <div class="alert alert-danger mx-3" role="alert">
                     Username atau password salah. Silakan coba lagi.
                 </div>
