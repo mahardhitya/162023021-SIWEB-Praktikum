@@ -1,0 +1,123 @@
+/* Custom Styling [cite: 48, 49] */
+
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+.hero-section {
+    height: 70vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                url('https://images.unsplash.com/photo-1459749411177-042180ce673c?auto=format&fit=crop&q=80&w=2070') center/cover;
+}
+.hero-section {
+    /* Menggunakan gambar lokal dari folder assets */
+    /* linear-gradient memberikan efek gelap transparan agar teks putih mudah dibaca */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('../assets/banner.png') no-repeat; 
+    
+    background-size: cover;      /* Gambar menutupi seluruh area */
+    background-position: center; /* Gambar tetap di tengah */
+    background-attachment: fixed; /* Efek parallax saat di-scroll (Opsional) */
+    min-height: 500px;           /* Tinggi minimal hero section */
+    width: 100%;
+}
+
+/* Menambahkan bayangan pada teks agar lebih 'pop out' */
+.shadow-text {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    border: none;
+    padding: 12px 30px;
+    font-weight: bold;
+}
+.stat-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+}
+
+.concert-item img {
+    height: 200px;
+    object-fit: cover; 
+    border-radius: 8px 8px 0 0;
+}
+
+.concert-item {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.concert-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+}
+
+.badge {
+    padding: 0.5em 1em;
+    font-weight: 500;
+}
+/* Menghapus semua sela pada pembungkus banner */
+.logo-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Memastikan tidak ada scroll horizontal */
+}
+
+.main-logo {
+    width: 100%;
+    height: auto;
+    display: block; /* Menghilangkan celah kecil di bawah gambar */
+}
+
+/* Opsional: Jika ingin memberi sedikit bayangan di bawah banner */
+.logo-wrapper {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.main-logo:hover {
+    transform: scale(1.05);
+}
+
+.sticky-top {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Dark mode overrides */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+body.dark-mode .navbar {
+    background-color: #212121 !important;
+}
+body.dark-mode .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}

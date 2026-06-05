@@ -1,0 +1,59 @@
+/* login-style.css */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.login-wrapper {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('../assets/bg-loginpage.jpg') center/cover no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(15px);        
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Kustomisasi Input Form */
+.form-control {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white !important;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #2575fc;
+    box-shadow: none;
+}
+
+.input-group-text {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.2);
+}
