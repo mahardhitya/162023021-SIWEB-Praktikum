@@ -45,7 +45,7 @@
                     <div class="card-body text-center">
                         <i class="bi bi-calendar-event display-4 text-primary mb-3"></i>
                         <h5 class="card-title">Total Event</h5>
-                        <p class="display-6 fw-bold">24</p>
+                        <p class="display-6 fw-bold">{{ $events->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -72,78 +72,41 @@
 
     <section id="event-list" class="container py-5">
         <h2 class="text-center mb-5 fw-bold">Jadwal Konser Mendatang</h2>
+
+        @if ($success)
+            <div class="alert alert-success text-center">{{ $success }}</div>
+        @endif
+
+        @if ($events->isEmpty())
+            <div class="alert alert-info text-center">Belum ada event yang tersedia. Silakan tambahkan event baru di bawah.</div>
+        @endif
+
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0 concert-item" data-name="Rock Legend Tour" data-stock="20">
-                    <img src="{{ asset('assets/rock.png') }}" class="card-img-top" alt="Konser Rock">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-primary">Music</span>
-                            <h6 class="text-muted mb-0"><i class="bi bi-calendar3 me-1"></i> 20 Mar 2026</h6>
-                        </div>
-                        <h5 class="card-title fw-bold">Rock Legend Tour</h5>
-                        <p class="card-text text-secondary">Stadion Gelora Bung Karno, Jakarta</p>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-dark">Rp 750.000</span>
-                            <button class="btn btn-outline-dark btn-sm">Detail</button>
-                        </div>
-                        <p>Stok: <span class="stock-count">20</span></p>
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-success btn-sm buy-btn">Beli</button>
-                            <button class="btn btn-outline-primary btn-sm wishlist-btn">Tambah ke Wishlist</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0 concert-item" data-name="IVE Fest" data-stock="15">
-                    <img src="{{ asset('assets/ive.jpg') }}" class="card-img-top" alt="Konser Pop">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-info text-dark">Pop</span>
-                            <h6 class="text-muted mb-0"><i class="bi bi-calendar3 me-1"></i> 12 Apr 2026</h6>
-                        </div>
-                        <h5 class="card-title fw-bold">IVE Fest</h5>
-                        <p class="card-text text-secondary">ICE BSD, Tangerang</p>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-dark">Rp 1.450.000</span>
-                            <button class="btn btn-outline-dark btn-sm">Detail</button>
-                        </div>
-                        <p>Stok: <span class="stock-count">15</span></p>
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-success btn-sm buy-btn">Beli</button>
-                            <button class="btn btn-outline-primary btn-sm wishlist-btn">Tambah ke Wishlist</button>
+            @foreach ($events as $event)
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 concert-item" data-name="{{ $event->nama_konser }}" data-stock="10">
+                        <img src="{{ asset($event->image ?? 'assets/banner.png') }}" class="card-img-top" alt="{{ $event->nama_konser }}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary">Event</span>
+                                <h6 class="text-muted mb-0"><i class="bi bi-calendar3 me-1"></i> {{ \Illuminate\Support\Carbon::parse($event->tanggal)->format('d M Y') }}</h6>
+                            </div>
+                            <h5 class="card-title fw-bold">{{ $event->nama_konser }}</h5>
+                            <p class="card-text text-secondary">{{ $event->lokasi }}, {{ $event->artis }}</p>
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-dark">Rp {{ number_format($event->harga, 0, ',', '.') }}</span>
+                                <button class="btn btn-outline-dark btn-sm">Detail</button>
+                            </div>
+                            <p>Stok: <span class="stock-count">10</span></p>
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-success btn-sm buy-btn">Beli</button>
+                                <button class="btn btn-outline-primary btn-sm wishlist-btn">Tambah ke Wishlist</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0 concert-item" data-name="Midnight Jazz Session" data-stock="10">
-                    <img src="{{ asset('assets/jazz.png') }}" class="card-img-top" alt="Konser Jazz">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-secondary">Jazz</span>
-                            <h6 class="text-muted mb-0"><i class="bi bi-calendar3 me-1"></i> 05 Mei 2026</h6>
-                        </div>
-                        <h5 class="card-title fw-bold">Midnight Jazz Session</h5>
-                        <p class="card-text text-secondary">Motion Blue, Jakarta</p>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-dark">Rp 1.200.000</span>
-                            <button class="btn btn-outline-dark btn-sm">Detail</button>
-                        </div>
-                        <p>Stok: <span class="stock-count">10</span></p>
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-success btn-sm buy-btn">Beli</button>
-                            <button class="btn btn-outline-primary btn-sm wishlist-btn">Tambah ke Wishlist</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 
@@ -153,33 +116,45 @@
                 <div class="col-lg-8">
                     <div class="card shadow p-4 border-0">
                         <h3 class="mb-4 text-center">Daftarkan Event Konser Baru</h3>
-                        <form id="concertForm" class="needs-validation" novalidate>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $message)
+                                        <li>{{ $message }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form id="concertForm" method="POST" action="{{ route('events.store') }}" class="needs-validation" novalidate>
+                            @csrf
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <label class="form-label">Nama Konser</label>
-                                    <input type="text" class="form-control" id="namaKonser" required>
+                                    <input type="text" name="nama_konser" class="form-control" id="namaKonser" value="{{ old('nama_konser') }}" required>
                                     <div class="invalid-feedback">Mohon isi nama konser.</div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Artis / Band Utama</label>
-                                    <input type="text" class="form-control" id="artis" required>
+                                    <input type="text" name="artis" class="form-control" id="artis" value="{{ old('artis') }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tanggal Pelaksanaan</label>
-                                    <input type="date" class="form-control" id="tanggal" required>
+                                    <input type="date" name="tanggal" class="form-control" id="tanggal" value="{{ old('tanggal') }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Lokasi (Venue)</label>
-                                    <select class="form-select" id="lokasi" required>
+                                    <select name="lokasi" class="form-select" id="lokasi" required>
                                         <option value="">Pilih Lokasi...</option>
-                                        <option>Stadion Gelora Bung Karno</option>
-                                        <option>ICE BSD</option>
-                                        <option>Jakarta International Stadium</option>
+                                        <option {{ old('lokasi') === 'Stadion Gelora Bung Karno' ? 'selected' : '' }}>Stadion Gelora Bung Karno</option>
+                                        <option {{ old('lokasi') === 'ICE BSD' ? 'selected' : '' }}>ICE BSD</option>
+                                        <option {{ old('lokasi') === 'Jakarta International Stadium' ? 'selected' : '' }}>Jakarta International Stadium</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Harga Tiket Dasar (Rp)</label>
-                                    <input type="number" class="form-control" id="harga" placeholder="Contoh: 500000" required>
+                                    <input type="number" name="harga" class="form-control" id="harga" value="{{ old('harga') }}" placeholder="Contoh: 500000" required>
                                 </div>
                                 <div class="col-12 mt-4 text-center">
                                     <button type="submit" class="btn btn-dark px-5">Simpan Data Konser</button>

@@ -1,74 +1,47 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Majo Stage</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ asset('css/login-style.css') }}">
-</head>
-<body>
-    <div class="login-wrapper">
-        <div class="login-box shadow-lg">
-            <div class="text-center mb-4">
-                <h2 class="fw-bold text-white mt-2">Majo Stage</h2>
-                <p class="text-light-50">Silakan login untuk mengelola event</p>
-            </div>
+<x-guest-layout>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            @if ($errors->any())
-                <div class="alert alert-danger mx-3" role="alert">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $message)
-                            <li>{{ $message }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @elseif ($error)
-                <div class="alert alert-danger mx-3" role="alert">
-                    Username atau password salah. Silakan coba lagi.
-                </div>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+            </label>
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
             @endif
 
-            <form method="POST" action="{{ route('login.submit') }}" class="needs-validation" novalidate>
-                @csrf
-                <div class="mb-4">
-                    <label class="form-label text-white">Username</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-transparent border-end-0 text-white"><i class="bi bi-person"></i></span>
-                        <input type="text" name="username" class="form-control bg-transparent text-white border-start-0"
-                               value="{{ old('username', $username) }}" placeholder="Masukkan username" required>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label text-white">Password</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-transparent border-end-0 text-white"><i class="bi bi-lock"></i></span>
-                        <input type="password" name="password" class="form-control bg-transparent text-white border-start-0"
-                               placeholder="Masukkan password" required>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="form-check">
-                        <input type="checkbox" name="remember" class="form-check-input" id="rememberMe" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="form-check-label text-white-50" for="rememberMe">Remember Me</label>
-                    </div>
-                    <a href="#" class="text-info text-decoration-none small">Lupa Password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow">LOGIN</button>
-
-                <div class="text-center mt-4">
-                    <a href="{{ route('home') }}" class="text-white-50 text-decoration-none small">
-                        <i class="bi bi-arrow-left me-1"></i> Kembali ke Beranda
-                    </a>
-                </div>
-            </form>
+            <x-primary-button class="ms-3">
+                {{ __('Log in') }}
+            </x-primary-button>
         </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    </form>
+</x-guest-layout>
